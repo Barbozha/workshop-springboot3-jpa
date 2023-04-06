@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.barbozha.curso.entities.Category;
 import com.barbozha.curso.entities.Order;
+import com.barbozha.curso.entities.OrderItem;
 import com.barbozha.curso.entities.Product;
 import com.barbozha.curso.entities.User;
 import com.barbozha.curso.entities.enums.OrderStatus;
 import com.barbozha.curso.repositories.CategoryRepository;
+import com.barbozha.curso.repositories.OrderItemRepository;
 import com.barbozha.curso.repositories.OrderRepository;
 import com.barbozha.curso.repositories.ProductRepository;
 import com.barbozha.curso.repositories.UserRepository;
@@ -32,6 +34,9 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 	
 
 	@Override
@@ -75,6 +80,13 @@ public class TestConfig implements CommandLineRunner {
 		userRepository.saveAll(Arrays.asList(u1, u2));
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
 		
+		
+		// Salvando os itens de pedidos na tabela orderItem
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
 
 	}
 

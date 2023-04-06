@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.barbozha.curso.entities.pk.OrdemItemPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -16,7 +17,7 @@ public class OrderItem implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@EmbeddedId
-	private OrdemItemPK id; // É o nome da classe criada para auxiliar
+	private OrdemItemPK id = new OrdemItemPK(); // É o nome da classe criada para auxiliar
 	
 	private Integer quantity;
 	private Double price;
@@ -32,6 +33,7 @@ public class OrderItem implements Serializable{
 		this.price = price;
 	}
 	
+	@JsonIgnore // preciso por um JsonIgnore aqui para não dar problema
 	public Order getOrder() {
 		return id.getOrder();
 	}
