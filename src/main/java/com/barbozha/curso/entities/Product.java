@@ -29,12 +29,15 @@ public class Product implements Serializable {
 	private String imgUrl;
 
 	@ManyToMany
+	//@Transient // Impede que o JPA interpreta o comando Set. caso dê erro ao executar(solução temporária).
 	@JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-	private Set<Category> categories = new HashSet<>();
+	//O Set me garante que eu não terei um produto com mais de uma categoria
+	private Set<Category> categories = new HashSet<>(); // A minha coleção começa com vazia.
 
 	public Product() {
 	}
 
+	// Não coloca as coleções dentro do construtores. porque já foi instanciada.
 	public Product(Long id, String name, String description, Double price, String imgUrl) {
 		super();
 		this.id = id;

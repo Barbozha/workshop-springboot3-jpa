@@ -26,13 +26,14 @@ public class Category implements Serializable {
 	private String name;
 	
 	@JsonIgnore
+	//@Transient // Impede que o JPA interpreta o comando Set. caso dê erro ao executar(solucção temporária).
 	@ManyToMany(mappedBy = "categories") // está em Set<Category> categories = new HashSet<>();
 	private Set<Product> products = new HashSet<>();
 
 	public Category() {
 
 	}
-
+	// Não coloca as coleções dentro do construtores. porque já foi instanciada.
 	public Category(Long id, String name) {
 		super();
 		this.id = id;
