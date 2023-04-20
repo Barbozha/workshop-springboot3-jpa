@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.barbozha.curso.entities.Category;
 import com.barbozha.curso.entities.Order;
 import com.barbozha.curso.entities.OrderItem;
+import com.barbozha.curso.entities.Payment;
 import com.barbozha.curso.entities.Product;
 import com.barbozha.curso.entities.User;
 import com.barbozha.curso.entities.enums.OrderStatus;
@@ -87,7 +88,12 @@ public class TestConfig implements CommandLineRunner {
 		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
 		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
-
+		
+		// Salvando o pagameento do pedido (order) 1
+		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+		o1.setPayment(pay1);
+		orderRepository.save(o1);
+		
 	}
 
 }
