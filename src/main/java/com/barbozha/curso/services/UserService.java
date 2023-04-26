@@ -13,6 +13,8 @@ import com.barbozha.curso.repositories.UserRepository;
 import com.barbozha.curso.services.exceptions.DatabaseException;
 import com.barbozha.curso.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UserService {
 	
@@ -43,10 +45,15 @@ public class UserService {
 	}
 	
 	public User update(Long id, User obj) {
-		User entity = repository.getReferenceById(id);
-		//Crio uma função para atualizar os dados que chegaram do obj
-		updateData(entity,obj);
-		return repository.save(entity);
+		try {
+			User entity = repository.getReferenceById(id);
+			//Crio uma função para atualizar os dados que chegaram do obj
+			updateData(entity,obj);
+			return repository.save(entity);
+		}
+		catch(EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	
 	}
 
